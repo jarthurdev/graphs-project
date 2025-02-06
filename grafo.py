@@ -1,5 +1,4 @@
 import heapq # Ele permite inserir e remover elementos mantendo-os ordenados de forma eficiente.
-from collections import deque # Double Ended Queue - Manipular os lados da fila de forma mais fácil (E&D).
 
 class Grafo:
 
