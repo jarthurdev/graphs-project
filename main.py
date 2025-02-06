@@ -15,6 +15,7 @@ grafo.add_aresta('F', 'E', 25)  # Conexão entre F e E (25 km)
 grafo.add_aresta('C', 'A', 30)  # Conexão entre C e A (30 km)
 grafo.add_aresta('C', 'E', 20)  # Conexão entre C e E (20 km)
 grafo.add_aresta('E', 'D', 18)  # Conexão entre E e D (18 km)
+grafo.add_aresta('F', 'C', 15)  # Conexão entre F e C (15 km)
 
 # Loop principal para permitir múltiplas viagens
 while True:
