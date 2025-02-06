@@ -19,28 +19,6 @@ class Grafo:
     def exibir(self):
         for vertice in self.grafo:
             print(f"{vertice} -> {self.grafo[vertice]}")
-
-    # Função para verificar se há um caminho entre dois vértices (Busca em Largura - BFS)
-
-    def verificar_conexao(self, origem, destino):
-        if origem not in self.grafo or destino not in self.grafo: # Verifica se o grafo possui origem e destino
-            return False # Não possui algum dos dois.
-
-        visitados = set() # Inicializa um set para indicar os pontos que foram visitados
-        fila = deque([origem]) # Inicialização da fila com o vértice de origem
-
-        while fila:
-            vertice = fila.popleft() # Enquanto houver elementos na fila, remove os elementos que entraram primeiro. **
-
-            if vertice == destino: # Verificação com o vértice de destino.
-                return True # Destino encontrado.
-
-            for vizinho, _ in self.grafo[vertice]: # Percorre os vizinhos do vértice.
-                if vizinho not in visitados: # Verifica se o vizinho ainda não foi visitado.
-                    visitados.add(vizinho) # Marca como visitado.
-                    fila.append(vizinho) # É adicionado na fila para que seja explorado isoladamente. **
-
-        return False # Se não há destino, retorna False.
     
     # Função para encontrar o menor caminho entre dois vértices (Algoritmo de Dijkstra)
     

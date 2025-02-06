@@ -1,59 +1,52 @@
-import heapq
-from grafo import Grafo
+import grafo
 
 def menu():
-    print("\n=====================================")
-    print("Bem-vindo à Agência de Ônibus JBA!  ")
-    print("=======================================")
-    print("Seu destino começa aqui! Vamos rodar!")
-    print("\nDigite as cidades para viajar (Ex: A B C D E F), ou 'sair' para encerrar:")
+    print("\n🚍 Bem-vindo à Agência JBA 🚍")
+    print("Sua melhor opção para viajar com conforto e segurança!")
 
-def mostrar_rota(distancia, caminho):
-    print("\n🚍 Embarque confirmado!")
-    print(f"\nDistância total da rota: {distancia} km")
-    print("\n🛣️ Próxima parada: " + " -> ".join(caminho))
-    print("\nAproveite sua viagem!")
+grafo = grafo.Grafo()
 
-def main():
-    grafo = Grafo()
+grafo.add_aresta('A', 'B', 10)  # A está conectada a B (10 km)
+grafo.add_aresta('B', 'C', 15)  # B está conectada a C (15 km) # O rio separa A e B das demais cidades, e há uma ponte entre B e C.
+grafo.add_aresta('C', 'D', 12)  # C está conectada a D (12 km)
 
-    # Conexões entre as cidades, levando em consideração a geografia fictícia
-    grafo.add_aresta('A', 'B', 10)  # Cidade A e B conectadas
-    grafo.add_aresta('A', 'C', 15)  # Cidade A e C conectadas
-    grafo.add_aresta('A', 'D', 30)  # Cidade A e D conectadas
-    grafo.add_aresta('B', 'D', 50)  # Cidade B e D conectadas
-    grafo.add_aresta('C', 'D', 25)  # Cidade C e D conectadas
-    grafo.add_aresta('E', 'F', 70)  # Cidade E e F conectadas
-    grafo.add_aresta('B', 'F', 100)  # Cidade B e F conectadas
-    grafo.add_aresta('A', 'E', 40)  # Cidade A e E conectadas
-    grafo.add_aresta('B', 'C', 20)  # Cidade B e C conectadas
-    grafo.add_aresta('C', 'E', 60)  # Cidade C e E conectadas
-
-    while True:
-        menu()
-        entrada = input("Sua escolha: ").strip().lower()
-
-        if entrada == "sair":
-            print("\nAté logo! Agradecemos pela preferência da Agência JBA!")
+while True:
+    menu()
+    cidades = input("Digite a sequência de cidades separadas por espaço (exemplo: A B C D): ").split()
+    
+    if len(cidades) < 2:
+        print("⚠️ Você deve inserir pelo menos duas cidades para calcular a rota!")
+        continue
+    
+    rota_completa = []
+    distancia_total = 0
+    
+    for i in range(len(cidades) - 1):
+        origem, destino = cidades[i], cidades[i + 1]
+        resultado = grafo.dijkstra(origem, destino)
+        
+        if resultado is None:
+            print(f"❌ Não foi possível encontrar um caminho entre {origem} e {destino}.")
             break
-
-        cidades = entrada.split()
-        if len(cidades) < 2:
-            print("Por favor, digite pelo menos duas cidades para calcular a rota.")
-            continue
-
-        origem = cidades[0].upper()
-        destino = cidades[-1].upper()
-
-        distancia, caminho = grafo.dijkstra(origem, destino)
-
-        if distancia is None:
-            print("\n⚠️ Não foi possível encontrar um caminho entre as estações fornecidas.")
         else:
-            print(f"\n🚍 Embarque confirmado! Rota de {origem} a {destino}")
-            print(f"\nDistância total da rota: {distancia} km")
-            print(f"🛣️ Rota: {' -> '.join(caminho)}")
-            print("\nAproveite sua viagem com a Agência JBA!")
-
-if __name__ == "__main__":
-    main()
+            distancia, caminho = resultado
+            rota_completa.extend(caminho[:-1])
+            distancia_total += distancia
+    
+    rota_completa.append(cidades[-1])
+    
+    print("\n🚌 Sua viagem está pronta!")
+    print("➡️ Saindo para embarque...")
+    for i, cidade in enumerate(rota_completa):
+        if i == 0:
+            print(f"🏁 Partida: {cidade}")
+        elif i == len(rota_completa) - 1:
+            print(f"🏁 Chegada: {cidade}")
+        else:
+            print(f"🚏 Próxima parada: {cidade}")
+    print(f"🛣️ Distância total: {distancia_total} km")
+    
+    continuar = input("Deseja fazer outra viagem? (s/n): ").strip().lower()
+    if continuar != 's':
+        print("Obrigado por viajar com a Agência JBA! ✈️")
+        break
