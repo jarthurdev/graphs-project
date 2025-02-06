@@ -6,13 +6,17 @@ def menu():
 
 grafo = grafo.Grafo()
 
-grafo.add_aresta('A', 'B', 10)  # A está conectada a B (10 km)
-grafo.add_aresta('B', 'C', 15)  # B está conectada a C (15 km) # O rio separa A e B das demais cidades, e há uma ponte entre B e C.
-grafo.add_aresta('C', 'D', 12)  # C está conectada a D (12 km)
+grafo.add_aresta('A', 'B', 20)  # A está conectada a B (10 km)
+grafo.add_aresta('B', 'F', 20)  # B está conectada a C (15 km) # O rio separa A e B das demais cidades, e há uma ponte entre B e C.
+grafo.add_aresta('F', 'C', 15)  # C está conectada a D (12 km)
+grafo.add_aresta('F', 'E', 25)  # C está conectada a D (12 km)
+grafo.add_aresta('C', 'A', 30)  # C está conectada a D (12 km)
+grafo.add_aresta('C', 'E', 20)  # C está conectada a D (12 km)
+grafo.add_aresta('E', 'D', 18)  # C está conectada a D (12 km)
 
 while True:
     menu()
-    cidades = input("Digite a sequência de cidades separadas por espaço (exemplo: A B C D): ").split()
+    cidades = input("Digite a sequência de cidades separadas por espaço (exemplo: A B C D E F): ").split()
     
     if len(cidades) < 2:
         print("⚠️ Você deve inserir pelo menos duas cidades para calcular a rota!")
